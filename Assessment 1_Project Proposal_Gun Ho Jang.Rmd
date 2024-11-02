@@ -1,12 +1,88 @@
 ---
-title: 'Assessment 1: Project Proposal'
+title: 'Assessment 1: Data Mini Project'
 author: "Gun Ho Jang"
 date: "`r Sys.Date()`"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries, include =  FALSE, message = FALSE, warning = FALSE}
+# Loading libraries for the project
+library(tidyverse)
+library(knitr)
+```
+
+## Research Question
+
+As rising cost of living has garnered increased attention over recent years due to inflationary pressures on the price of food and energy (<https://www.weforum.org/stories/2022/09/cost-of-living-crisis-global-impact/>, <https://theconversation.com/global-economy-2023-how-countries-around-the-world-are-tackling-the-cost-of-living-crisis-196740>), a large number of people are becoming increasingly vulnerable to food affordability issues. In this project, I will be investigating this issue: how much of the global population is at risk of not affording a healthy diet?
+
+## Dataset Introduction
+
+Data for this project was sourced from [Our World in Data](https://ourworldindata.org/food-prices) under the Food Prices Data Explorer in the Food Prices insight, which in turn derived its data from the Food and Agriculture Organization of the United Nations and the World Bank (<https://ourworldindata.org/food-prices>). Three different datasets were used for this project:
+
+- [Number of people that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Number+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
+
+- [Share of population that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Share+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
+
+- [Cost of a healthy diet as a share of average expenditure on food](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Cost+&Affordability+metric=Share+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
+
+## Dataset Description
+
+```{r datasets, message = FALSE}
+# Reading individual CSV files into respective dataframes
+number_healthy_diet <- read.csv("Data/number-healthy-diet-unaffordable.csv")
+
+share_healthy_diet <- read.csv("Data/share-healthy-diet-unaffordable.csv")
+
+cost_healthy_diet <- read.csv("Data/cost-healthy-diet-share-food-expenditure.csv")
+
+# Filtering the data for most recent year available and selecting the relevant columns
+number_healthy_diet_2021 <- number_healthy_diet %>% 
+  filter(Year == 2021) %>% 
+  select(Entity, 4)
+
+share_healthy_diet_2021 <- share_healthy_diet %>% 
+  filter(Year == 2021) %>% 
+  select(Entity, 4)
+
+cost_healthy_diet_2021 <- cost_healthy_diet %>% 
+  filter(Year == 2021) %>% 
+  select(Entity, 4)
+
+# Merging dataframes based on Entity variable (i.e. Name of Country)
+food_affordability_data <- number_healthy_diet_2021 %>%
+  left_join(share_healthy_diet_2021, by = "Entity") %>% 
+  left_join(cost_healthy_diet_2021, by = "Entity")
+
+# Renaming Entity variable to 'Country' and cleaning header names to introduce spacing
+
+food_affordability_data <- food_affordability_data %>% 
+  rename(Country = Entity,
+         `Number of people who cannot afford a healthy diet` = Number.of.people.who.cannot.afford.a.healthy.diet,
+         `Share of the population who cannot afford a healthy diet` = Share.of.the.population.who.cannot.afford.a.healthy.diet,
+    `Affordability of a healthy diet: ratio of cost to food expenditures` = Affordability.of.a.healthy.diet..ratio.of.cost.to.food.expenditures
+         )
+
+# Removing invalid entries under 'Country' variable
+invalid_country_entries <-  c("East Asia & Pacific (WB)", 
+                              "Europe & Central Asia (WB)",
+                              "High-income countries",
+                              "Latin America & Caribbean (WB)",
+                              "Low-income countries",
+                              "Lower-middle-income countries",
+                              "Middle East & North Africa (WB)",
+                              "North America (WB)",
+                              "South Asia (WB)",
+                              "Sub-Saharan Africa (WB)",
+                              "Upper-middle-income countries",
+                              "World")
+
+food_affordability_data <- food_affordability_data %>% 
+  filter(!Country %in% invalid_country_entries)
+
 ```
 
 ## R Markdown
@@ -28,3 +104,5 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## References
