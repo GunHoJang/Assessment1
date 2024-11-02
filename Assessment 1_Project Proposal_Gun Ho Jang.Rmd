@@ -23,15 +23,36 @@ As rising cost of living has garnered increased attention over recent years due 
 
 Data for this project was sourced from [Our World in Data](https://ourworldindata.org/food-prices) under the Food Prices Data Explorer in the Food Prices insight, which in turn derived its data from the Food and Agriculture Organization of the United Nations and the World Bank (<https://ourworldindata.org/food-prices>). Three different datasets were used for this project:
 
-- [Number of people that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Number+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
+-   [Number of people that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Number+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
 
-- [Share of population that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Share+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
+-   [Share of population that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Share+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
 
-- [Cost of a healthy diet as a share of average expenditure on food](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Cost+&Affordability+metric=Share+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
+-   [Cost of a healthy diet as a share of average expenditure on food](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Cost+&Affordability+metric=Share+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
+
+I will be observing the most recent year (i.e. 2021) that data is readily available for the variables of interest in this project.
+
+The variables of interest *Number of people that cannot afford a healthy diet* and *Share of population that cannot afford a healthy diet* will be looking at both the number and percentage share of a country's population that cannot afford a healthy diet, where: "The cost of a healthy diet is the lowest-cost set of foods available that would meet requirements in dietary guidelines from governments and public health agencies. A diet is defined as unaffordable when its cost, plus basic non-food needs like housing and transportation, exceeds daily income" (<https://ourworldindata.org/food-prices>).
+
+Regarding the third variable *Cost of a healthy diet as a share of average expenditure on food*, it observes the cost of a healthy diet as represented as a ratio against a person's average food expenditure in a particular country.
+
+```{r variable names}
+# LIsting the variable names
+variable_names <- data.frame(
+  Variable_Names = c(
+  "Country",
+  "Number of people who cannot afford a healthy diet",
+  "Share of the population who cannot afford a healthy diet",
+  "Affordability of a healthy diet: ratio of cost to food expenditures"
+))
+
+kable(variable_names, caption = "Variable Names of Interest")
+```
 
 ## Dataset Description
 
-```{r datasets, message = FALSE}
+The  R code chunk below demonstrates the cleaning of the data in order to be fit for analytical purposes.
+
+```{r data set cleaning, message = FALSE}
 # Reading individual CSV files into respective dataframes
 number_healthy_diet <- read.csv("Data/number-healthy-diet-unaffordable.csv")
 
@@ -83,6 +104,27 @@ invalid_country_entries <-  c("East Asia & Pacific (WB)",
 food_affordability_data <- food_affordability_data %>% 
   filter(!Country %in% invalid_country_entries)
 
+```
+
+```{r number of observations and variables, echo = FALSE}
+# Calculating the number of observations and variables
+
+num_observations <- nrow(food_affordability_data)
+num_variables <- ncol(food_affordability_data)
+```
+
+The data set regarding the affordability of healthy diets contains `r num_observations` observations and `r num_variables` variables. Please note the code to derive the number of observations and variables is, as below:
+
+```{r screenshot, echo = FALSE}
+# Implementing the screenshot into the project
+include_graphics("Image/Number of Observations and Variables Screenshot.png")
+```
+
+As observed below, the first two rows of the data set can be displayed with `str()` to showcase the type of variables within the data set.
+
+```{r first two rows, echo = FALSE}
+# Displaying the first two rows of the data set
+str(food_affordability_data[1:2,])
 ```
 
 ## R Markdown
