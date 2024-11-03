@@ -159,7 +159,7 @@ data_summary <- food_affordability_data %>%
 kable(data_summary, caption = "Summary statistics of the 'Number of people who cannot afford a healthy diet' and 'Share of the population who cannot afford a healthy diet' variables")
 ```
 
-From the summary statistics, it appears that the continents of Asia ha the highest number of peoples unable to afford a healthy diet then followed Africa (approx. 857 million and 1.612 billion people respectively), although Africa's population maintains a higher mean and median percentage share of the population being unable to afford healthy diets compared to Asia's figures. **Please note that certain continents may not be represented accurately due to unavailable data and smaller pools of countries, such as Oceania (i.e. Australia and Fiji) where Fiji has skewed the represented data for the continent.**
+From the summary statistics, it appears that the continents of Asia has the highest number of peoples unable to afford a healthy diet then followed Africa (approx. 857 million and 1.612 billion people respectively), although Africa's population maintains a higher mean and median percentage share of the population being unable to afford healthy diets compared to Asia's figures. **Please note that certain continents may not be represented accurately due to unavailable data and smaller pools of countries, such as Oceania (i.e. Australia and Fiji) where Fiji has skewed the represented data for the continent.**
 
 ## Visualisations
 
