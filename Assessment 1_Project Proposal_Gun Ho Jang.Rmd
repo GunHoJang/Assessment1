@@ -161,4 +161,16 @@ From the summary statistics, it appears that the continents of Asia ha the highe
 
 ## Visualisations
 
+```{r data visualisation}
+
+# Creating the scatter plot for Affordability of a Healthy Diet by Country
+ggplot(food_affordability_data, aes(x = Country, y = `Affordability of a healthy diet: ratio of cost to food expenditures`)) +
+  geom_point() +
+  labs(
+    title = "Affordability of a Healthy Diet by Country",
+    x = "Country",
+    y =  "Ratio of Cost to Food Expenditures"
+  )
+```
+
 ## References
