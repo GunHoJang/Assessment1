@@ -18,7 +18,7 @@ library(knitr)
 
 ## Research Question
 
-As rising cost of living has garnered increased attention over recent years due to inflationary pressures on the price of food and energy (<https://www.weforum.org/stories/2022/09/cost-of-living-crisis-global-impact/>, <https://theconversation.com/global-economy-2023-how-countries-around-the-world-are-tackling-the-cost-of-living-crisis-196740>), a large number of people are becoming increasingly vulnerable to food affordability issues. In this project, I will be investigating this issue: how much of the global population is at risk of not affording a healthy diet?
+As rising cost of living has garnered increased attention over recent years due to inflationary pressures on the price of food and energy (<https://www.weforum.org/stories/2022/09/cost-of-living-crisis-global-impact/>, <https://theconversation.com/global-economy-2023-how-countries-around-the-world-are-tackling-the-cost-of-living-crisis-196740>), a large number of people are becoming increasingly vulnerable to food affordability issues. In this project, I will be investigating this issue: how much of the population across the world is at risk of not affording a healthy diet?
 
 ## Dataset Introduction
 
@@ -146,35 +146,20 @@ str(food_affordability_data[1:2,])
 data_summary <- food_affordability_data %>% 
   group_by(Continent) %>% 
   summarise(
-    Sum_Number = sum(`Number of people who cannot afford a healthy diet`, na.rm = TRUE),
-    Mean_Number = mean(`Number of people who cannot afford a healthy diet`, na.rm = TRUE),
-    Sum_Share = sum(`Share of the population who cannot afford a healthy diet`, na.rm = TRUE),
-    Mean_Share = sum(`Share of the population who cannot afford a healthy diet`, na.rm = TRUE)
+    Mean_Number = format(mean(`Number of people who cannot afford a healthy diet`, na.rm = TRUE), scientific = FALSE),
+    Sum_Number = format(sum(`Number of people who cannot afford a healthy diet`, na.rm = TRUE), scientific = FALSE),
+    Mean_Share = format(mean(`Share of the population who cannot afford a healthy diet`, na.rm = TRUE), scientific =  FALSE),
+    Median_Share = format(median(`Share of the population who cannot afford a healthy diet`, na.rm = TRUE), scientific = FALSE)
   ) %>% 
   head(10)
 
 kable(data_summary, caption = "Summary statistics of the 'Number of people who cannot afford a healthy diet' and 'Share of the population who cannot afford a healthy diet' variables")
 
+
 ```
 
-## R Markdown
+From the summary statistics, it appears that the continents of Asia ha the highest number of peoples unable to afford a healthy diet then followed Africa (approx. 857 million and 1.656 billion people respectively), although Africa's population maintains a higher mean and median percentage share of the population being unable to afford healthy diets compared to Asia's figures. **Please note that certain continents may not be represented accurately due to unavailable data and smaller pools of countries, such as Oceania (i.e. Australia and Fiji) where Fiji has skewed the represented data for the continent.**
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Visualisations
 
 ## References
