@@ -4,7 +4,7 @@ author: "Gun Ho Jang"
 date: "`r Sys.Date()`"
 output: html_document
 ---
-  
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -19,12 +19,12 @@ library(knitr)
 ## Research Question
 
 As rising cost of living has garnered increased attention over recent years due to inflationary pressures on the price of food and energy (<https://www.weforum.org/stories/2022/09/cost-of-living-crisis-global-impact/>, <https://theconversation.com/global-economy-2023-how-countries-around-the-world-are-tackling-the-cost-of-living-crisis-196740>), a large number of people are becoming increasingly vulnerable to food affordability issues. In this project, we will be investigating this issue: how much of the population across the world is at risk of not affording a healthy diet?
-  
+
 ## Dataset Introduction
-  
+
 Data for this project was sourced from [Our World in Data](https://ourworldindata.org/food-prices) under the Food Prices Data Explorer in the Food Prices insight, which in turn derived its data from the Food and Agriculture Organization of the United Nations and the World Bank (<https://ourworldindata.org/food-prices>). Three different datasets were used for this project:
-  
-  -   [Number of people that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Number+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
+
+-   [Number of people that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Number+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
 
 -   [Share of population that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Share+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
 
@@ -52,7 +52,7 @@ kable(variable_names, caption = "Variable Names of Interest")
 
 ## Dataset Description
 
-The  R code chunk below demonstrates the cleaning of the data in order to be fit for analytical purposes.
+The R code chunk below demonstrates the cleaning of the data in order to be fit for analytical purposes.
 
 ```{r dataset cleaning, message = FALSE}
 # Reading individual CSV files into respective dataframes
@@ -129,7 +129,7 @@ num_variables <- ncol(food_affordability_data)
 ```
 
 The dataset regarding the affordability of healthy diets contains `r num_observations` observations and `r num_variables` variables. Please note the code to derive the number of observations and variables is, as below:
-  
+
 ```{r screenshot, echo = FALSE}
 # Implementing the screenshot into the project
 include_graphics("Image/Number of Observations and Variables Screenshot.png")
@@ -160,9 +160,9 @@ kable(data_summary, caption = "Summary statistics of the 'Number of people who c
 ```
 
 From the summary statistics, it appears that the continents of Asia has the highest number of peoples unable to afford a healthy diet then followed Africa (approx. 857 million and 1.612 billion people respectively), although Africa's population maintains a higher mean and median percentage share of the population being unable to afford healthy diets compared to Asia's figures. **Please note that certain continents may not be represented accurately due to unavailable data and smaller pools of countries, such as Oceania (i.e. Australia and Fiji) where Fiji has skewed the represented data for the continent.**
-  
+
 ## Visualisations
-  
+
 ```{r data visualisation}
 
 # Creating the scatter plot for Affordability of a Healthy Diet across Continents
@@ -175,6 +175,10 @@ ggplot(food_affordability_data, aes(x = Continent, y = `Affordability of a healt
   )
 ```
 
+The following observations are made for the categorical scatter plot:
 
+- *Countries within the continents of Africa, the Americas, and Asia are displaying data points that surpass 100% of the Ratio of Cost to Food Expenditures, which indicates that people in these nations would have to spend more than their average food expenditure budget to sufficiently afford a healthy diet.*
+
+- In Africa, the highest ratio is 318% for the nation of Burundi, and for Asia, the sole outlier represents Syria at 301%. Both nations are classified by a past or present history of volatility and conflict, and struggle considerably with poverty (<https://www.bbc.com/news/world-africa-13085064>, <https://www.bbc.com/news/world-middle-east-14703856>)
 
 ## References
