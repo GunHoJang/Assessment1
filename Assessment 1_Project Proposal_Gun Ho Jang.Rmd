@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r libraries, include =  FALSE, message = FALSE, warning = FALSE}
 # Loading libraries for the project
 library(tidyverse)
+library(countrycode)
 library(knitr)
 ```
 
@@ -40,6 +41,7 @@ Regarding the third variable *Cost of a healthy diet as a share of average expen
 variable_names <- data.frame(
   Variable_Names = c(
   "Country",
+  "Continent",
   "Number of people who cannot afford a healthy diet",
   "Share of the population who cannot afford a healthy diet",
   "Affordability of a healthy diet: ratio of cost to food expenditures"
@@ -103,6 +105,16 @@ invalid_country_entries <-  c("East Asia & Pacific (WB)",
 
 food_affordability_data <- food_affordability_data %>% 
   filter(!Country %in% invalid_country_entries)
+
+# Re-grouping countries by their Continents using the 'countrycode' package
+food_affordability_data <- food_affordability_data %>% 
+  mutate(
+    Continent = countrycode(Country, origin = "country.name", destination = "continent")
+    )
+
+# Re-arranging the variables columns
+food_affordability_data <- food_affordability_data %>% 
+  select(Country, Continent, everything())
 
 ```
 
