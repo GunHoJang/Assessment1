@@ -139,6 +139,24 @@ As observed below, the first two rows of the data set can be displayed with `str
 str(food_affordability_data[1:2,])
 ```
 
+## Data Summary
+
+```{r data summary}
+# Summary statistics for 'Number of people who cannot afford a healthy diet' and 'Affordability of a healthy diet: ratio of cost to food expenditures'
+data_summary <- food_affordability_data %>% 
+  group_by(Continent) %>% 
+  summarise(
+    Sum_Number = sum(`Number of people who cannot afford a healthy diet`, na.rm = TRUE),
+    Mean_Number = mean(`Number of people who cannot afford a healthy diet`, na.rm = TRUE),
+    Sum_Share = sum(`Share of the population who cannot afford a healthy diet`, na.rm = TRUE),
+    Mean_Share = sum(`Share of the population who cannot afford a healthy diet`, na.rm = TRUE)
+  ) %>% 
+  head(10)
+
+kable(data_summary, caption = "Summary statistics of the 'Number of people who cannot afford a healthy diet' and 'Share of the population who cannot afford a healthy diet' variables")
+
+```
+
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
