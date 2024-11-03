@@ -12,12 +12,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r libraries, include =  FALSE, message = FALSE, warning = FALSE}
 # Loading libraries for the project
 library(tidyverse)
+library(countrycode)
 library(knitr)
 ```
 
 ## Research Question
 
-As rising cost of living has garnered increased attention over recent years due to inflationary pressures on the price of food and energy (<https://www.weforum.org/stories/2022/09/cost-of-living-crisis-global-impact/>, <https://theconversation.com/global-economy-2023-how-countries-around-the-world-are-tackling-the-cost-of-living-crisis-196740>), a large number of people are becoming increasingly vulnerable to food affordability issues. In this project, I will be investigating this issue: how much of the global population is at risk of not affording a healthy diet?
+As rising cost of living has garnered increased attention over recent years due to inflationary pressures on the price of food and energy (<https://www.weforum.org/stories/2022/09/cost-of-living-crisis-global-impact/>, <https://theconversation.com/global-economy-2023-how-countries-around-the-world-are-tackling-the-cost-of-living-crisis-196740>), a large number of people are becoming increasingly vulnerable to food affordability issues. In this project, we will be investigating this issue: how much of the population across the world is at risk of not affording a healthy diet?
 
 ## Dataset Introduction
 
@@ -29,7 +30,7 @@ Data for this project was sourced from [Our World in Data](https://ourworldindat
 
 -   [Cost of a healthy diet as a share of average expenditure on food](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Cost+&Affordability+metric=Share+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
 
-I will be observing the most recent year (i.e. 2021) that data is readily available for the variables of interest in this project.
+We will be observing the most recent year (i.e. 2021) that data is readily available for the variables of interest in this project.
 
 The variables of interest *Number of people that cannot afford a healthy diet* and *Share of population that cannot afford a healthy diet* will be looking at both the number and percentage share of a country's population that cannot afford a healthy diet, where: "The cost of a healthy diet is the lowest-cost set of foods available that would meet requirements in dietary guidelines from governments and public health agencies. A diet is defined as unaffordable when its cost, plus basic non-food needs like housing and transportation, exceeds daily income" (<https://ourworldindata.org/food-prices>).
 
@@ -40,6 +41,7 @@ Regarding the third variable *Cost of a healthy diet as a share of average expen
 variable_names <- data.frame(
   Variable_Names = c(
   "Country",
+  "Continent",
   "Number of people who cannot afford a healthy diet",
   "Share of the population who cannot afford a healthy diet",
   "Affordability of a healthy diet: ratio of cost to food expenditures"
@@ -52,7 +54,7 @@ kable(variable_names, caption = "Variable Names of Interest")
 
 The  R code chunk below demonstrates the cleaning of the data in order to be fit for analytical purposes.
 
-```{r data set cleaning, message = FALSE}
+```{r dataset cleaning, message = FALSE}
 # Reading individual CSV files into respective dataframes
 number_healthy_diet <- read.csv("Data/number-healthy-diet-unaffordable.csv")
 
@@ -104,6 +106,19 @@ invalid_country_entries <-  c("East Asia & Pacific (WB)",
 food_affordability_data <- food_affordability_data %>% 
   filter(!Country %in% invalid_country_entries)
 
+# Removing invalid N/A entries under all variable columns
+food_affordability_data <- na.omit(food_affordability_data)
+
+# Re-grouping countries by their Continents using the 'countrycode' package
+food_affordability_data <- food_affordability_data %>% 
+  mutate(
+    Continent = countrycode(Country, origin = "country.name", destination = "continent")
+    )
+
+# Re-arranging the variables columns
+food_affordability_data <- food_affordability_data %>% 
+  select(Country, Continent, everything())
+
 ```
 
 ```{r number of observations and variables, echo = FALSE}
@@ -113,38 +128,52 @@ num_observations <- nrow(food_affordability_data)
 num_variables <- ncol(food_affordability_data)
 ```
 
-The data set regarding the affordability of healthy diets contains `r num_observations` observations and `r num_variables` variables. Please note the code to derive the number of observations and variables is, as below:
+The dataset regarding the affordability of healthy diets contains `r num_observations` observations and `r num_variables` variables. Please note the code to derive the number of observations and variables is, as below:
 
 ```{r screenshot, echo = FALSE}
 # Implementing the screenshot into the project
 include_graphics("Image/Number of Observations and Variables Screenshot.png")
 ```
 
-As observed below, the first two rows of the data set can be displayed with `str()` to showcase the type of variables within the data set.
+As observed below, the first two rows of the dataset can be displayed with `str()` to showcase the type of variables within the dataset.
 
 ```{r first two rows, echo = FALSE}
-# Displaying the first two rows of the data set
+# Displaying the first two rows of the dataset
 str(food_affordability_data[1:2,])
 ```
 
-## R Markdown
+## Data Summary
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r data summary}
+# Summary statistics for 'Number of people who cannot afford a healthy diet' and 'Affordability of a healthy diet: ratio of cost to food expenditures'
+data_summary <- food_affordability_data %>% 
+  group_by(Continent) %>% 
+  summarise(
+    Mean_Number = format(mean(`Number of people who cannot afford a healthy diet`, na.rm = TRUE), scientific = FALSE),
+    Sum_Number = format(sum(`Number of people who cannot afford a healthy diet`, na.rm = TRUE), scientific = FALSE),
+    Mean_Share = format(mean(`Share of the population who cannot afford a healthy diet`, na.rm = TRUE), scientific =  FALSE),
+    Median_Share = format(median(`Share of the population who cannot afford a healthy diet`, na.rm = TRUE), scientific = FALSE)
+  ) %>% 
+  head(10)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+kable(data_summary, caption = "Summary statistics of the 'Number of people who cannot afford a healthy diet' and 'Share of the population who cannot afford a healthy diet' variables")
 ```
 
-## Including Plots
+From the summary statistics, it appears that the continents of Asia ha the highest number of peoples unable to afford a healthy diet then followed Africa (approx. 857 million and 1.612 billion people respectively), although Africa's population maintains a higher mean and median percentage share of the population being unable to afford healthy diets compared to Asia's figures. **Please note that certain continents may not be represented accurately due to unavailable data and smaller pools of countries, such as Oceania (i.e. Australia and Fiji) where Fiji has skewed the represented data for the continent.**
 
-You can also embed plots, for example:
+## Visualisations
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r data visualisation}
+
+# Scatter plot for 
+ggplot(food_affordability_data, aes(x = Continent, y = `Affordability of a healthy diet: ratio of cost to food expenditures`)) +
+  geom_point() +
+  labs(
+    title = "Affordability of a Healthy Diet across Continents",
+    x = "Continent",
+    y =  "Ratio of Cost to Food Expenditures"
+  )
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 ## References
