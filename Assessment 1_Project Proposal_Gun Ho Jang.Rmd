@@ -22,7 +22,7 @@ As rising cost of living has garnered increased attention over recent years due 
 
 ## Dataset Introduction
 
-Data for this project was sourced from [Our World in Data](https://ourworldindata.org/food-prices) under the Food Prices Data Explorer in the Food Prices insight, which in turn derived its data from the Food and Agriculture Organization of the United Nations and the World Bank (<https://ourworldindata.org/food-prices>). Three different datasets were used for this project:
+Data for this project was sourced from [Our World in Data](https://ourworldindata.org/food-prices) under the Food Prices Data Explorer in the Food Prices insight, which in turn derived its data from the Food and Agriculture Organization of the United Nations ('FAO') and the World Bank (<https://ourworldindata.org/food-prices>). Three different datasets were used for this project:
 
 -   [Number of people that cannot afford a healthy diet](https://ourworldindata.org/explorers/food-prices?Diet=Healthy+diet&Cost+or+Affordability=Affordability&Affordability+metric=Number+that+cannot+afford&Cost+metric=%25+of+average+food+expenditure&country=NGA~BGD~IND~ETH~MEX~USA~BRA~GBR)
 
@@ -183,6 +183,6 @@ The following observations are made for the categorical scatter plot:
 
 ## Conclusion
 
-The research question for this  project originally asked how much of the population across the world is at risk of not affording a healthy diet, and from rudimentary data visualisation, 
+The research question for this  project originally asked how much of the population across the world is at risk of not affording a healthy diet? From the data summary exercise, it appears that a total sum of 2.686 billion people worldwide do not have the means to afford a healthy diet, with the majority of these people located in the African and Asian continents. In terms of the ratio of cost to average food expenditure, nations in Africa, the Americas, and Asia are more likely to have citizens whose food budgets cannot match the total cost required to purchase the lowest-cost healthy diet for their country. Given a third of the world's population is unable to meet sufficient caloric and nutritional intake, the Director of FAO's Agrifood Economics and Policy Dvision has highlighted that this represents a structural issue in our agrifood systems, and considerable investment in these systems is required for the United Nations to achieve its goal of Zero Hunger by 2030 ((https://www.fao.org/newsroom/detail/healthy-diets-remain-unaffordable-for-a-third-of-the-world-s-population/en). 
 
 ## References
