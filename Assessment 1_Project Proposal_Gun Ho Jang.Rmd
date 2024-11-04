@@ -179,6 +179,10 @@ The following observations are made for the categorical scatter plot:
 
 - *Countries within the continents of Africa, the Americas, and Asia are displaying data points that surpass 100% of the Ratio of Cost to Food Expenditures, which indicates that people in these nations would have to spend more than their average food expenditure budget to sufficiently afford a healthy diet.*
 
-- In Africa, the highest ratio is 318% for the nation of Burundi, and for Asia, the sole outlier represents Syria at 301%. Both nations are classified by a past or present history of volatility and conflict, and struggle considerably with poverty (<https://www.bbc.com/news/world-africa-13085064>, <https://www.bbc.com/news/world-middle-east-14703856>)
+- In Africa, the highest ratio is 318% for the nation of Burundi, and for Asia, the sole outlier represents Syria at 301%. Both nations are characterised by a past or present history of volatility and conflict, and both struggle considerably with poverty. (<https://www.bbc.com/news/world-africa-13085064>, <https://www.bbc.com/news/world-middle-east-14703856>)
+
+## Conclusion
+
+The research question for this  project originally asked how much of the population across the world is at risk of not affording a healthy diet, and from rudimentary data visualisation, 
 
 ## References
